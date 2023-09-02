@@ -36,6 +36,7 @@ function BusinessReports() {
         fetch(`${Base_Url}GetBusinessReport`, requestOptions)
             .then(response => response.json())
             .then(result => {
+                console.log(result);
                 if (result.Status === 200) {
                     setdata(result.Data)
                     setQuotesData(result.Data.Quote)
@@ -98,12 +99,12 @@ function BusinessReports() {
                                     <p className="text-sm font-semibold">No. Of Policy</p>
                                     <p className="text-sm font-semibold">Total Premium</p>
                                 </div>
-                                {QuotesData && QuotesData.map((el, index) => {
+                                {QuotesData && QuotesData.map((ela, index) => {
                                     return (
                                         <div className="grid grid-cols-3 text-center mt-1 mb-3" key={index}>
-                                            <p className="f01">{el.Name}</p>
-                                            <p className="f01">{el.Premuim}</p>
-                                            <p className="f01">₹{el.Amount}/-</p>
+                                            <p className="f01">{ela.Name}</p>
+                                            <p className="f01">{ela.Premuim}</p>
+                                            <p className="f01">₹{ela.Amount}/-</p>
                                         </div>
                                     )
                                 })}
