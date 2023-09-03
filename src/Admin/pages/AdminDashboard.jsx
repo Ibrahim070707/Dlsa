@@ -148,7 +148,7 @@ const AdminDashboard = () => {
     GetLocation();
     setTimeout(() => {
       setShowStacked(true);
-    }, 1500);
+    }, 2000);
   }, []);
   const DashboardCards = [
     {
