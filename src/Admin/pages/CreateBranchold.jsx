@@ -8,25 +8,29 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import Label from "../components/AddProductForm/Label";
 import { Select } from "antd";
 
+
 function CreateBranch() {
   const { Base_Url } = useStateContext();
   const [loader, setloader] = useState(false);
   const [Countries, setCountries] = useState([]);
   const [CountryID, setCountryID] = useState("");
-  const [ApiFormData, setApiFormData] = useState({});
+  const [ApiFormData, setApiFormData] = useState({})
   const [States, setStates] = useState([]);
   const Token = localStorage.getItem("token");
   const [Cities, setCities] = useState([]);
-  const [Photo, setPhoto] = useState("");
-  const [IdProof, setIdProof] = useState("");
-  const [AddressProof, setAddressProof] = useState("");
-  const [ApplicationForm, setApplicationForm] = useState("");
-  const [CancelationForm, setCancelationForm] = useState("");
+  const [Photo, setPhoto] = useState("")
+  const [IdProof, setIdProof] = useState("")
+  const [AddressProof, setAddressProof] = useState("")
+  const [ApplicationForm, setApplicationForm] = useState("")
+  const [CancelationForm, setCancelationForm] = useState("")
   const [ParmanetsStates, setParmanetsStates] = useState([]);
   const [ParmanentCities, setParmanentCities] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([])
 
-  const genders = [{ name: "Male" }, { name: "Female" }];
+  const genders = [
+    { name: "Male" },
+    { name: "Female" },
+  ]
   const education = [
     { name: "12th pass" },
     { name: "10th pass" },
@@ -67,10 +71,7 @@ function CreateBranch() {
     let iso = e.target.value;
     Countries.map((el) => {
       if (iso === el.id) {
-        setApiFormData({
-          ...ApiFormData,
-          ["corresponding_country_name"]: el.name,
-        });
+        setApiFormData({ ...ApiFormData, ["corresponding_country_name"]: el.name });
         setCountryID(el.id);
       }
     });
@@ -105,14 +106,8 @@ function CreateBranch() {
     let iso = e.target.value;
     States.map((el) => {
       if (iso === el.id) {
-        const foundState = StatesWithZones.find(
-          (state) => state.name === el.name
-        );
-        setApiFormData({
-          ...ApiFormData,
-          ["zone"]: foundState.zone,
-          ["coresponding_state_name"]: el.name,
-        });
+        const foundState = StatesWithZones.find((state) => state.name === el.name);
+        setApiFormData({ ...ApiFormData, ["zone"]: foundState.zone, ["coresponding_state_name"]: el.name });
       }
     });
     // CountryID
@@ -143,10 +138,7 @@ function CreateBranch() {
       .catch((error) => console.log("error", error));
   };
   const handleCityChange = (e) => {
-    setApiFormData({
-      ...ApiFormData,
-      ["coresponding_city_name"]: e.target.value,
-    });
+    setApiFormData({ ...ApiFormData, ["coresponding_city_name"]: e.target.value });
   };
   useEffect(() => {
     GetAllCountries();
@@ -172,6 +164,7 @@ function CreateBranch() {
         permanent_city_name: "",
         permanent_pincode: "",
       });
+
     }
   };
   const handleParmanentCountryChange = (e) => {
@@ -208,19 +201,13 @@ function CreateBranch() {
         setParmanetsStates(ParStateData);
       })
       .catch((error) => console.log("error", error));
-  };
+  }
   const handleParmanrntStateChange = (e) => {
     let iso = e.target.value;
     ParmanetsStates.map((el) => {
       if (iso === el.id) {
-        const foundState = StatesWithZones.find(
-          (state) => state.name === el.name
-        );
-        setApiFormData({
-          ...ApiFormData,
-          ["zone"]: foundState.zone,
-          ["permanent_state_name"]: el.name,
-        });
+        const foundState = StatesWithZones.find((state) => state.name === el.name);
+        setApiFormData({ ...ApiFormData, ["zone"]: foundState.zone, ["permanent_state_name"]: el.name });
       }
     });
     // CountryID
@@ -254,8 +241,8 @@ function CreateBranch() {
     setApiFormData({ ...ApiFormData, ["permanent_city_name"]: e.target.value });
   };
   const handleOnSubmit = (e) => {
-    e.preventDefault();
-    setloader(true);
+    e.preventDefault()
+    setloader(true)
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Accept", "application/json");
@@ -264,34 +251,22 @@ function CreateBranch() {
     var formdata = new FormData();
     selectedTypes.map((el) => {
       formdata.append("user_type[]", el);
-    });
+    })
     formdata.append("first_name", ApiFormData.first_name);
     formdata.append("last_name", ApiFormData.last_name);
     formdata.append("gender", ApiFormData.gender);
     formdata.append("date_of_birth", ApiFormData.date_of_birth);
     formdata.append("coresponding_address1", ApiFormData.coresponding_address1);
     formdata.append("coresponding_address2", ApiFormData.coresponding_address2);
-    formdata.append(
-      "coresponding_city_name",
-      ApiFormData.coresponding_city_name
-    );
-    formdata.append(
-      "coresponding_state_name",
-      ApiFormData.coresponding_state_name
-    );
-    formdata.append(
-      "corresponding_country_name",
-      ApiFormData.corresponding_country_name
-    );
+    formdata.append("coresponding_city_name", ApiFormData.coresponding_city_name);
+    formdata.append("coresponding_state_name", ApiFormData.coresponding_state_name);
+    formdata.append("corresponding_country_name", ApiFormData.corresponding_country_name);
     formdata.append("coresponding_pincode", ApiFormData.coresponding_pincode);
     formdata.append("permanent_address1", ApiFormData.permanent_address1);
     formdata.append("permanent_address2", ApiFormData.permanent_address2);
     formdata.append("permanent_city_name", ApiFormData.permanent_city_name);
     formdata.append("permanent_state_name", ApiFormData.permanent_state_name);
-    formdata.append(
-      "permanent_country_name",
-      ApiFormData.permanent_country_name
-    );
+    formdata.append("permanent_country_name", ApiFormData.permanent_country_name);
     formdata.append("permanent_pincode", ApiFormData.permanent_pincode);
     formdata.append("Education", ApiFormData.Education);
     formdata.append("Qualification", ApiFormData.Qualification);
@@ -313,176 +288,180 @@ function CreateBranch() {
     formdata.append("zone", ApiFormData.zone);
 
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow'
     };
 
     fetch(`${Base_Url}Add/Hub`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
+      .then(response => response.json())
+      .then(result => {
         if (result.Status === 200) {
-          setloader(false);
+          setloader(false)
           toast.success("Hub Created Successfully");
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch(error => console.log('error', error));
+
   };
   const StatesWithZones = [
+
     {
       name: "Jammu and Kashmir",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Himachal Pradesh",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Punjab",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Haryana",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Uttarakhand",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Uttar Pradesh",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Delhi (National Capital Territory)",
-      zone: "North",
+      zone: "North"
     },
     {
       name: "Chhattisgarh",
-      zone: "North",
+      zone: "North"
     },
+
 
     // Western
     {
       name: "Rajasthan",
-      zone: "West",
+      zone: "West"
     },
     {
       name: "Gujarat",
-      zone: "West",
+      zone: "West"
     },
     {
       name: "Maharashtra",
-      zone: "West",
+      zone: "West"
     },
     {
       name: "Goa",
-      zone: "West",
+      zone: "West"
     },
     {
       name: "Dadra and Nagar Haveli and Daman and Diu (merged Union Territory)",
-      zone: "West",
+      zone: "West"
     },
     {
       name: "Madhya Pradesh",
-      zone: "West",
+      zone: "West"
     },
 
     // East
     {
       name: "Bihar",
-      zone: "East",
+      zone: "East"
     },
     {
       name: "Jharkhand",
-      zone: "East",
+      zone: "East"
     },
     {
       name: "Odisha",
-      zone: "East",
+      zone: "East"
     },
     {
       name: "West Bengal",
-      zone: "East",
+      zone: "East"
     },
     {
       name: "Sikkim",
-      zone: "East",
+      zone: "East"
     },
 
     // NorthEast
     {
       name: "Assam",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
     {
       name: "Arunachal Pradesh",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
     {
       name: "Manipur",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
     {
       name: "Meghalaya",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
     {
       name: "Mizoram",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
     {
       name: "Nagaland",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
     {
       name: "Tripura",
-      zone: "NorthEast",
+      zone: "NorthEast"
     },
+
 
     // Southern
     {
       name: "Andhra Pradesh",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Telangana",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Karnataka",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Tamil Nadu",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Kerala",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Puducherry (Union Territory)",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Lakshadweep (Union Territory)",
-      zone: "South",
+      zone: "South"
     },
     {
       name: "Andaman and Nicobar Islands (Union Territory)",
-      zone: "South",
-    },
+      zone: "South"
+    }
   ];
   const handleTypeChange = async (values) => {
     setSelectedTypes(values);
-  };
+  }
   const userType = [
     { value: 1, label: "BM" },
     { value: 2, label: "CS" },
     { value: 3, label: "i Partner" },
-  ];
+  ]
 
   return (
     <>
@@ -512,16 +491,14 @@ function CreateBranch() {
                     allowClear
                     onChange={handleTypeChange}
                     style={{
-                      width: "100%",
-                      overflowY: "scroll",
+                      width: '100%',
+                      overflowY: "scroll"
                     }}
                     maxTagCount={2}
                     placeholder="Please Select User Type"
-                    options={userType.map((option) => ({
+                    options={userType.map(option => ({
                       ...option,
-                      disabled:
-                        (selectedTypes.includes(1) && option.value === 2) ||
-                        (selectedTypes.includes(2) && option.value === 1),
+                      disabled: (selectedTypes.includes(1) && option.value === 2) || (selectedTypes.includes(2) && option.value === 1)
                     }))}
                   />
                   {/* <select
@@ -595,11 +572,7 @@ function CreateBranch() {
                     required
                     className="bg border  border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight font-bold"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select Gender
                     </option>
                     {genders.map((gen, index) => (
@@ -680,11 +653,7 @@ function CreateBranch() {
                     id="countries"
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select Country
                     </option>
                     {Countries.map((country, index) => (
@@ -707,11 +676,7 @@ function CreateBranch() {
                     id="countries"
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select State
                     </option>
                     {States.map((country, index) => (
@@ -735,11 +700,7 @@ function CreateBranch() {
                     id="countries"
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select City
                     </option>
                     {Cities.map((country, index) => (
@@ -759,18 +720,13 @@ function CreateBranch() {
                   <Input
                     placeholder="Enter Pincode"
                     type="number"
-                    inputMode="numeric" // This helps in showing numeric keyboard on mobile devices
-                    pattern="\d*" // This pattern allows only digits
+                    maxLength="6"
                     name="branchName"
-                    value={ApiFormData.coresponding_pincode}
                     onChange={(e) => {
-                      const inputValue = e.target.value;
-                      if (inputValue.length <= 6) {
-                        setApiFormData({
-                          ...ApiFormData,
-                          coresponding_pincode: inputValue,
-                        });
-                      }
+                      setApiFormData({
+                        ...ApiFormData,
+                        ["coresponding_pincode"]: e.target.value,
+                      });
                     }}
                   />
                 </div>
@@ -778,6 +734,7 @@ function CreateBranch() {
               <div>
                 <label className="flex items-center">
                   <input
+
                     type="checkbox"
                     value="1"
                     onChange={handleCheckboxAddressChange}
@@ -832,23 +789,15 @@ function CreateBranch() {
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                     required
                   >
-                    {ApiFormData.permanent_country_name ? (
-                      <option
-                        className="text-gray-400 font-bold"
-                        selected
-                        value={ApiFormData.permanent_country_name}
-                      >
-                        {ApiFormData.permanent_country_name}
-                      </option>
-                    ) : (
-                      <option
-                        className="text-gray-400 font-bold"
-                        disabled
-                        selected
-                      >
-                        Select Country
-                      </option>
-                    )}
+                    {
+                      ApiFormData.permanent_country_name ?
+                        <option className="text-gray-400 font-bold" selected value={ApiFormData.permanent_country_name}>
+                          {ApiFormData.permanent_country_name}
+                        </option> :
+                        <option className="text-gray-400 font-bold" disabled selected>
+                          Select Country
+                        </option>
+                    }
                     {Countries.map((country, index) => (
                       <option
                         key={index}
@@ -871,23 +820,15 @@ function CreateBranch() {
                     id="countries"
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                   >
-                    {ApiFormData.permanent_state_name ? (
-                      <option
-                        className="text-gray-400 font-bold"
-                        selected
-                        value={ApiFormData.permanent_state_name}
-                      >
-                        {ApiFormData.permanent_state_name}
-                      </option>
-                    ) : (
-                      <option
-                        className="text-gray-400 font-bold"
-                        disabled
-                        selected
-                      >
-                        Select State
-                      </option>
-                    )}
+                    {
+                      ApiFormData.permanent_state_name ?
+                        <option className="text-gray-400 font-bold" selected value={ApiFormData.permanent_state_name}>
+                          {ApiFormData.permanent_state_name}
+                        </option> :
+                        <option className="text-gray-400 font-bold" disabled selected>
+                          Select State
+                        </option>
+                    }
                     {ParmanetsStates.map((state, index) => (
                       <option
                         key={index}
@@ -910,23 +851,15 @@ function CreateBranch() {
                     id="countries"
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                   >
-                    {ApiFormData.permanent_city_name ? (
-                      <option
-                        className="text-gray-400 font-bold"
-                        selected
-                        value={ApiFormData.permanent_city_name}
-                      >
-                        {ApiFormData.permanent_city_name}
-                      </option>
-                    ) : (
-                      <option
-                        className="text-gray-400 font-bold"
-                        disabled
-                        selected
-                      >
-                        Select City
-                      </option>
-                    )}
+                    {
+                      ApiFormData.permanent_city_name ?
+                        <option className="text-gray-400 font-bold" selected value={ApiFormData.permanent_city_name}>
+                          {ApiFormData.permanent_city_name}
+                        </option> :
+                        <option className="text-gray-400 font-bold" disabled selected>
+                          Select City
+                        </option>
+                    }
                     {ParmanentCities.map((city, index) => (
                       <option
                         key={index}
@@ -943,18 +876,16 @@ function CreateBranch() {
                 <div>
                   <Label label="Pincode" />
                   <Input
-                    placeholder="Enter Pincode"
+                    placeholder="Enter Picode"
                     type="text"
                     name="branchName"
+                    maxLength="6"
                     value={ApiFormData.permanent_pincode}
                     onChange={(e) => {
-                      const inputValue1 = e.target.value;
-                      if (inputValue1.length <= 6) {
-                        setApiFormData({
-                          ...ApiFormData,
-                          permanent_pincode: inputValue1,
-                        });
-                      }
+                      setApiFormData({
+                        ...ApiFormData,
+                        ["permanent_pincode"]: e.target.value,
+                      });
                     }}
                   />
                 </div>
@@ -963,6 +894,7 @@ function CreateBranch() {
                 <Label label="Educactional qualification" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
                 <div>
                   <Label label="Select Qualification" />
                   <select
@@ -977,11 +909,7 @@ function CreateBranch() {
                     id="gender"
                     className="bg border text-gray-400 border-gray-200 f01 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select Qualification
                     </option>
                     {education.map((edu, index) => (
@@ -1016,16 +944,15 @@ function CreateBranch() {
                     placeholder="Enter Experience in Year"
                     type="number"
                     name="branchName"
-                    value={ApiFormData.Experience_in_year}
                     onChange={(e) => {
-                      const inputValue = Math.max(0, parseInt(e.target.value));
                       setApiFormData({
                         ...ApiFormData,
-                        Experience_in_year: inputValue,
+                        ["Experience_in_year"]: e.target.value,
                       });
                     }}
                   />
                 </div>
+
                 <div>
                   <Label label="Industry" />
                   <Input
@@ -1045,7 +972,7 @@ function CreateBranch() {
                 <Label label="Internal Details" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                {/* <div>
+                <div>
                   <Label label="Department" />
                   <Input
                     placeholder="Enter Department"
@@ -1058,47 +985,38 @@ function CreateBranch() {
                       });
                     }}
                   />
-                </div> */}
+                </div>
 
                 <div>
                   <Label label="Personal Mobile Number" />
                   <Input
                     placeholder="Enter Personal Mobile Number"
                     type="number"
+                    maxLength="10"
                     name="branchName"
-                    value={ApiFormData.personal_mobile_no}
                     onChange={(e) => {
-                      const inputValue = Math.max(0, parseInt(e.target.value)); // Ensure a positive number
-                      const limitedInputValue = inputValue
-                        .toString()
-                        .slice(0, 10); // Limit to 10 characters
                       setApiFormData({
                         ...ApiFormData,
-                        personal_mobile_no: limitedInputValue,
+                        ["personal_mobile_no"]: e.target.value,
                       });
                     }}
                   />
                 </div>
 
-                	
-                <div>	
-                  <Label label="Official Mobile Number" />	
-                  <Input	
-                    placeholder="Enter Official Mobile Number"	
-                    type="number"	
-                    name="branchName"	
-                    value={ApiFormData.office_mobile_no}	
-                    onChange={(e) => {	
-                      const inputValue = Math.max(0, parseInt(e.target.value)); // Ensure a positive number	
-                      const limitedInputValue = inputValue	
-                        .toString()	
-                        .slice(0, 10); // Limit to 10 characters	
-                      setApiFormData({	
-                        ...ApiFormData,	
-                        office_mobile_no: limitedInputValue,	
-                      });	
-                    }}	
-                  />	
+                <div>
+                  <Label label="Official Mobile Number" />
+                  <Input
+                    placeholder="Enter Official Mobile Number"
+                    type="number"
+                    name="branchName"
+                    maxLength="10"
+                    onChange={(e) => {
+                      setApiFormData({
+                        ...ApiFormData,
+                        ["office_mobile_no"]: e.target.value,
+                      });
+                    }}
+                  />
                 </div>
                 {/* email id */}
                 <div>
@@ -1108,25 +1026,15 @@ function CreateBranch() {
                     type="email"
                     name="branchName"
                     onChange={(e) => {
-                      const emailValue = e.target.value;
                       setApiFormData({
                         ...ApiFormData,
-                        email_id: emailValue,
+                        ["email_id"]: e.target.value,
                       });
-                    }}
-                    onBlur={(e) => {
-                      const emailValue = e.target.value;
-                      const emailRegex =
-                        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                      if (emailValue && !emailRegex.test(emailValue)) {
-                        // Invalid email format, you can handle this according to your requirement
-                        toast.error("Invalid email format");
-                      }
                     }}
                   />
                 </div>
                 {/* alternate email id */}
-                {/* <div>
+                <div>
                   <Label label="Alternate Email ID" />
                   <Input
                     placeholder="Enter Alternate Email ID"
@@ -1139,7 +1047,7 @@ function CreateBranch() {
                       });
                     }}
                   />
-                </div> */}
+                </div>
                 {/* date of joining */}
                 <div>
                   <Label label="Date of Joining" />
@@ -1197,6 +1105,7 @@ function CreateBranch() {
                       type="file"
                       accept="image/*"
                       onChange={(e) => setIdProof(e.target.files[0])}
+
                     />
                   </div>
                 </div>
@@ -1210,9 +1119,11 @@ function CreateBranch() {
                       required
                       accept="image/*"
                       onChange={(e) => setAddressProof(e.target.files[0])}
+
+
                     />
                   </div>
-                </div>
+                </div >
                 <div className="text-center">
                   <Label label="Application Form" />
                   <div className="relative">
@@ -1221,20 +1132,21 @@ function CreateBranch() {
                       id="multiple_files"
                       required
                       type="file"
-                      accept=".pdf, image/*"
+                      accept=".pdf"
                       onChange={(e) => setApplicationForm(e.target.files[0])}
+
                     />
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <Label label="Bank Details" />
+                  <Label label="Cancellation Check" />
                   <div className="relative">
                     <input
                       className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded f01 py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-emerald-500"
                       id="multiple_files"
                       type="file"
-                      accept=".pdf, image/*"
+                      accept=".pdf"
                       required
                       onChange={(e) => setCancelationForm(e.target.files[0])}
                     />
@@ -1242,12 +1154,18 @@ function CreateBranch() {
                 </div>
               </div>
               <div className="flex mt-5 justify-center">
-                <CustomButton type={1} Title="Submit" BgColor="#fa5b05" />
+                <CustomButton
+                  type={1}
+                  Title="Submit"
+                  BgColor="#fa5b05"
+                />
               </div>
             </div>
           </div>
         </form>
-      )}
+
+      )
+      }
     </>
   );
 }
