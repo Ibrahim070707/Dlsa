@@ -414,12 +414,6 @@ const AdminDashboard = () => {
             open={ModelOpen}
             title="Branch Report"
             onCancel={() => {
-
-
-
-
-
-
               setModelOpen(false);
               setBranchID("");
               window.location.reload(false);
