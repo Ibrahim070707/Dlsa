@@ -111,7 +111,7 @@ function BusinessReports() {
                             </div>
                         </div>
                         <div className="text-sm mt-5 text-blue-500 font-semibold flex justify-start items-center gap-1 ">
-                            <span className="inline-flex cursor-pointer gap-2 items-center" onClick={() => window.open("https://myfiinbox.com/Rest/gbZc1bkumA/laravel8/public/api/DownloadBusinessReports")} >Download Business Report <FaArrowDown /> </span>
+                            <a href="https://myfiinbox.com/Rest/gbZc1bkumA/laravel8/public/api/DownloadBusinessReports" className="inline-flex cursor-pointer gap-2 items-center">Download Business Report <FaArrowDown /> </a>
                         </div>
                     </div>
                 </div>
